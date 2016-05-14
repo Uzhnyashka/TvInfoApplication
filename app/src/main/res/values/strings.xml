@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TvInfoApplication</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Closed</string>
+    <string name="add_to_favourites">Add channel to favourites</string>
+    <string name="delete_from_favourites">Delete channel from favourites</string>
+</resources>
