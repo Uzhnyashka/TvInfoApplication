@@ -31,7 +31,6 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
     private DatabaseHelper dbh;
     private String categoryName;
     private SwipeRefreshLayout swipeContainer;
-    private ListView l;
     public static final String KEY_CATEGORY = "CATEGORY";
 
     private ChannelsCursorAdapter mChannelListAdapter;
@@ -41,7 +40,6 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_channels, null);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
-        l = (ListView) v.findViewById(R.id.channel_list);
         return v;
     }
 
@@ -58,7 +56,6 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
 
         mChannelListAdapter = new ChannelsCursorAdapter(getActivity(), null, 0);
         setListAdapter(mChannelListAdapter);
-        //l.setAdapter(mChannelListAdapter);
 
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,8 +138,6 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
             case MainActivity.ID_CHANNELS:
                 mChannelListAdapter.swapCursor(null);
                 break;
-            case MainActivity.DELETE_CHANNELS:
-                mChannelListAdapter.swapCursor(null);
             default:
                 break;
         }

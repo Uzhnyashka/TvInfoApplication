@@ -41,16 +41,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void clearChannelsAndCategories() {
-        SQLiteDatabase db = getReadableDatabase();
-        db.rawQuery("DELETE FROM " + TvInfoContract.CategoryEntry.CATEGORY_TABLE_NAME, null);
-        db.rawQuery("DELETE FROM " + TvInfoContract.ChannelEntry.CHANNEL_TABLE_NAME, null);
-        db.rawQuery("DROP TABLE IF EXISTS " + TvInfoContract.CategoryEntry.CATEGORY_TABLE_NAME, null);
-        db.rawQuery("DROP TABLE IF EXISTS " + TvInfoContract.ChannelEntry.CHANNEL_TABLE_NAME, null);
-        db.delete(TvInfoContract.ChannelEntry.CHANNEL_TABLE_NAME, null, null);
-        db.delete(TvInfoContract.CategoryEntry.CATEGORY_TABLE_NAME, null, null);
-    }
-
     private void addChannelTable(SQLiteDatabase db) {
         db.execSQL(
                 "CREATE TABLE " + TvInfoContract.ChannelEntry.CHANNEL_TABLE_NAME + " (" +
