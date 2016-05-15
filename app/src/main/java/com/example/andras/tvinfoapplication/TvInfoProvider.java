@@ -200,7 +200,6 @@ public class TvInfoProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int rows;
-        Cursor cursor;
         switch(sUriMatcher.match(uri)) {
             case FAVOURITE_ID:
                 rows = db.delete(TvInfoContract.FavouritesEntry.FAVOURITE_TABLE_NAME, selection, selectionArgs);
