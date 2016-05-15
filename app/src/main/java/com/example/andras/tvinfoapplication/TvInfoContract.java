@@ -33,7 +33,6 @@ public class TvInfoContract {
 
         // Define the table schema
         public static final String CHANNEL_TABLE_NAME = "channel";
-        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_IDNAME = "idname";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "description";
@@ -60,7 +59,6 @@ public class TvInfoContract {
                 "vnd.android.cursor.item/" + CONTENT_URI + "/" + PATH_CATEGORY;
 
         public static final String CATEGORY_TABLE_NAME = "category";
-        //public static final String COLUMN_ID = "_id";
         public static final String COLUMN_NAME = "category";
 
         public static Uri buildCategoryUri(long id){
@@ -78,7 +76,6 @@ public class TvInfoContract {
                 "vnd.android.cursor.item/" + CONTENT_URI + "/" + PATH_FAVOURITE;
 
         public static final String FAVOURITE_TABLE_NAME = "favourite";
-        //public static final String COLUMN_ID = "_id";
         public static final String COLUMN_FAVOURITE_CHANNEL_ID = "channel_id";
 
         public static Uri buildCategoryUri(long id){

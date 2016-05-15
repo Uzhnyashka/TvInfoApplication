@@ -203,7 +203,6 @@ public class TvInfoProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-
         int rows;
         Cursor cursor;
         switch(sUriMatcher.match(uri)) {
