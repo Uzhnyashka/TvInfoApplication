@@ -17,12 +17,10 @@ import com.example.andras.tvinfoapplication.TvInfoContract;
  */
 public class CategoryCursorAdapter extends CursorAdapter {
     private LayoutInflater mInflater;
-    private Cursor cursor;
 
     public CategoryCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, flags);
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.cursor = cursor;
     }
 
     @Override
