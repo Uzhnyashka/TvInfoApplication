@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         startService(i);
     }
     public void clearDB() {
-        //dbh.clearChannelsAndCategories();
         getSupportLoaderManager().restartLoader(DELETE_CATEGORIES, null, this);
         getSupportLoaderManager().restartLoader(DELETE_CHANNELS, null, this);
     }
