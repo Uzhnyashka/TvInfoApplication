@@ -92,8 +92,14 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case MainActivity.ID_CHANNELS:
-                return new CursorLoader(getActivity(), TvInfoContract.ChannelEntry.CONTENT_URI, null,
-                        TvInfoContract.ChannelEntry.COLUMN_CATEGORY + " = ?", new String[] {categoryName}, null);
+                /*return new CursorLoader(getActivity(), TvInfoContract.ChannelEntry.CONTENT_URI, null,
+                        TvInfoContract.ChannelEntry.COLUMN_CATEGORY + " = ?", new String[] {categoryName}, null);*/
+            //check this
+            String projection[] = new String[] {TvInfoContract.ChannelEntry._ID, TvInfoContract.ChannelEntry.COLUMN_NAME, TvInfoContract.ChannelEntry.COLUMN_TV_URL};
+            return new CursorLoader(getActivity(), TvInfoContract.ChannelEntry.CONTENT_URI,
+                    projection, TvInfoContract.ChannelEntry.COLUMN_CATEGORY + " = ?",
+                    new String[] {categoryName},
+                    null);
             default:
                 // An invalid id was passed in
                 return null;

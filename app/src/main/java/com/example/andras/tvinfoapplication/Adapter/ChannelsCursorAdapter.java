@@ -38,11 +38,11 @@ public class ChannelsCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        long id = cursor.getLong(cursor.getColumnIndex("_id"));
+        long id = cursor.getLong(cursor.getColumnIndex(TvInfoContract.ChannelEntry._ID));
         String channelName = cursor.getString(cursor.getColumnIndex(TvInfoContract.ChannelEntry.COLUMN_NAME));
         String channelTvURL = cursor.getString(cursor.getColumnIndex(TvInfoContract.ChannelEntry.COLUMN_TV_URL));
         ViewHolder holder = (ViewHolder) view.getTag();
-        if(holder != null) {
+        if (holder != null) {
             holder.tvName.setText(channelName);
             holder.tvTvURL.setText(channelTvURL);
             holder.channelID = id;

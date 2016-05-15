@@ -25,6 +25,9 @@ import com.example.andras.tvinfoapplication.Adapter.CategoryCursorAdapter;
 import com.example.andras.tvinfoapplication.Fragment.CategoriesFragment;
 import com.example.andras.tvinfoapplication.Fragment.ChannelsFragment;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     public static final int ID_CHANNELS = 228;
     public static final int ID_CHANNEL = 230;
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()) {
             case R.id.menu_sync:
                 syncClicked();
+                Toast.makeText(this, "Sync started", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_clear:
                 clearDB();
@@ -165,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         {
             case ID_CATEGORIES:
                 mDrawerListAdapter.swapCursor(data);
+                Toast.makeText(this, "onLoadFinished swapCursor", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -177,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         {
             case ID_CATEGORIES:
                 mDrawerListAdapter.swapCursor(null);
+                Toast.makeText(this, "onLoadReset swapCursor", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
