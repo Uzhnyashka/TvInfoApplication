@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,10 +31,9 @@ import java.io.PrintWriter;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     public static final int ID_CHANNELS = 228;
-    public static final int ID_CHANNEL = 230;
     public static final int ID_CATEGORIES = 229;
-    public static final int ID_CATEGORY = 231;
-    public static final int ID_FAVOURITES = 232;
+    public static final int DELETE_CHANNELS = 666;
+    public static final int DELETE_CATEGORIES = 667;
 
     private DatabaseHelper dbh;
     private Toolbar toolbar;
@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         startService(i);
     }
     public void clearDB() {
-        dbh.clearChannelsAndCategories();
-        getSupportLoaderManager().restartLoader(ID_CATEGORIES, null, this);
+        //dbh.clearChannelsAndCategories();
+        getSupportLoaderManager().restartLoader(DELETE_CATEGORIES, null, this);
+        getSupportLoaderManager().restartLoader(DELETE_CHANNELS, null, this);
     }
 
     public void initViews() {
@@ -156,7 +157,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case MainActivity.ID_CATEGORIES:
                 return new CursorLoader(this, TvInfoContract.CategoryEntry.CONTENT_URI, null, null, null, null);
             //return new TvInfoCursorLoader(this, dbh, ID_CATEGORIES);
-
+            case DELETE_CATEGORIES:
+                Log.d("myTAG", "delte categories loader");
+                getContentResolver().delete(TvInfoContract.CategoryEntry.CONTENT_URI, null, null);
+                return new CursorLoader(this, TvInfoContract.CategoryEntry.CONTENT_URI, null, null, null, null);
+            case DELETE_CHANNELS:
+                Log.d("myTAG", "delte channels loader");
+                getContentResolver().delete(TvInfoContract.ChannelEntry.CONTENT_URI, null, null);
+                return new CursorLoader(this, TvInfoContract.ChannelEntry.CONTENT_URI, null, null, null, null);
             default:
                 // An invalid id was passed in
                 return null;

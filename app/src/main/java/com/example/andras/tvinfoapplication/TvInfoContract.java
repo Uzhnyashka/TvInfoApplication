@@ -43,7 +43,6 @@ public class TvInfoContract {
         public static final String COLUMN_YOUTUBE_URL = "youtubeURL";
         public static final String COLUMN_CATEGORY = "category";
 
-        // Define a function to build a URI to find a specific movie by it's identifier
         public static Uri buildChannelUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

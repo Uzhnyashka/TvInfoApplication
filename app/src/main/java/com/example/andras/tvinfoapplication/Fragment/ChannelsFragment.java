@@ -10,10 +10,12 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.andras.tvinfoapplication.Adapter.ChannelsCursorAdapter;
 import com.example.andras.tvinfoapplication.DatabaseHelper;
@@ -28,6 +30,8 @@ import com.example.andras.tvinfoapplication.TvInfoContract;
 public class ChannelsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private DatabaseHelper dbh;
     private String categoryName;
+    private SwipeRefreshLayout swipeContainer;
+    private ListView l;
     public static final String KEY_CATEGORY = "CATEGORY";
 
     private ChannelsCursorAdapter mChannelListAdapter;
@@ -36,6 +40,8 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_channels, null);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        l = (ListView) v.findViewById(R.id.channel_list);
         return v;
     }
 
@@ -52,7 +58,7 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
 
         mChannelListAdapter = new ChannelsCursorAdapter(getActivity(), null, 0);
         setListAdapter(mChannelListAdapter);
-        getLoaderManager().initLoader(MainActivity.ID_CHANNELS, null, this);
+        //l.setAdapter(mChannelListAdapter);
 
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,6 +75,12 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
                 } else {
                     return;
                 }
+            }
+        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getLoaderManager().restartLoader(MainActivity.ID_CHANNELS, null, ChannelsFragment.this);
             }
         });
     }
@@ -112,6 +124,10 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
         {
             case MainActivity.ID_CHANNELS:
                 mChannelListAdapter.swapCursor(data);
+                swipeContainer.setRefreshing(false);
+                break;
+            case MainActivity.DELETE_CHANNELS:
+                mChannelListAdapter.swapCursor(data);
                 break;
             default:
                 break;
@@ -125,6 +141,8 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
             case MainActivity.ID_CHANNELS:
                 mChannelListAdapter.swapCursor(null);
                 break;
+            case MainActivity.DELETE_CHANNELS:
+                mChannelListAdapter.swapCursor(null);
             default:
                 break;
         }
@@ -144,5 +162,6 @@ public class ChannelsFragment extends ListFragment implements LoaderManager.Load
         if (dbh == null) {
             dbh = DatabaseHelper.getInstance(getActivity());
         }
+        getLoaderManager().initLoader(MainActivity.ID_CHANNELS, null, this);
     }
 }

@@ -10,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class CategoriesFragment extends ListFragment implements LoaderManager.Lo
     private String categoryName;
     private DatabaseHelper dbh;
     private CategoryCursorAdapter mCategoryCursorAdapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -39,7 +41,6 @@ public class CategoriesFragment extends ListFragment implements LoaderManager.Lo
 
         mCategoryCursorAdapter = new CategoryCursorAdapter(getActivity(), null, 0);
         setListAdapter(mCategoryCursorAdapter);
-        getLoaderManager().initLoader(MainActivity.ID_CATEGORIES, null, this);
 
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,13 +60,19 @@ public class CategoriesFragment extends ListFragment implements LoaderManager.Lo
                 }
             }
         });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getLoaderManager().restartLoader(MainActivity.ID_CATEGORIES, null, CategoriesFragment.this);
+            }
+        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_categories, null);
-
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         return v;
     }
     public static CategoriesFragment newInstance() {
@@ -99,6 +106,7 @@ public class CategoriesFragment extends ListFragment implements LoaderManager.Lo
         {
             case MainActivity.ID_CATEGORIES:
                 mCategoryCursorAdapter.swapCursor(data);
+                swipeContainer.setRefreshing(false);
                 break;
             default:
                 break;
@@ -131,5 +139,6 @@ public class CategoriesFragment extends ListFragment implements LoaderManager.Lo
         if (dbh == null) {
             dbh = DatabaseHelper.getInstance(getActivity());
         }
+        getLoaderManager().initLoader(MainActivity.ID_CATEGORIES, null, this);
     }
 }

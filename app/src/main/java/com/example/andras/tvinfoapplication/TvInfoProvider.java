@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.TextViewCompat;
+import android.util.Log;
 
 /**
  * Created by andras on 10.05.16.
@@ -204,6 +205,12 @@ public class TvInfoProvider extends ContentProvider {
             case FAVOURITE_ID:
                 rows = db.delete(TvInfoContract.FavouritesEntry.FAVOURITE_TABLE_NAME, selection, selectionArgs);
                 break;
+            case CHANNEL:
+                rows = db.delete(TvInfoContract.ChannelEntry.CHANNEL_TABLE_NAME, selection, selectionArgs);
+                break;
+            case CATEGORY:
+                rows = db.delete(TvInfoContract.CategoryEntry.CATEGORY_TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -212,6 +219,7 @@ public class TvInfoProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
+        Log.d("myTAG", rows + " delted");
         return rows;
     }
 
