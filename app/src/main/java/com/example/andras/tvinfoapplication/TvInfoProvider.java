@@ -21,10 +21,6 @@ public class TvInfoProvider extends ContentProvider {
     private DatabaseHelper dbHelper;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    static final String CHANNEL_PROVIDER_NAME = "com.example.andras.tvinfoapp";
-    static final String CHANNEL_URL = "content://" + CHANNEL_PROVIDER_NAME + "/channels";
-    static final Uri CHANNEL_CONTENT_URI = Uri.parse(CHANNEL_URL);
-
     private static final int CHANNEL = 100;
     private static final int CHANNEL_ID = 101;
     private static final int CATEGORY = 200;
